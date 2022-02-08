@@ -84,7 +84,7 @@ $ address of a: 0002
 
 ## Arrays
 
-In memory, an array is just a contiguous sequence of bytes that is long enough to hold a specified number and type of element. For example, to declare an array `int nums[5];` which can hold 5 integers (which are each 4 bytes long), you would need $5 \times 4 = 20$ bytes of contiguous memory. 
+In memory, an array is just a contiguous sequence of bytes that is long enough to hold a specified number and type of element. For example, to declare an array `int nums[5];` which can hold 5 integers (which are each 4 bytes long), you would need ***5 x 4 = 20*** bytes of contiguous memory. 
 
 - The green bytes represent the single block of contiguous memory, the blue brackets show how each integer would be positioned and stored in each slot/index of the array
 
@@ -115,7 +115,7 @@ int main() {
 	int x = 5;
 	addToInt(x);
 	printf("after addToInt, x = %d\n", x);
-	
+
 	addToIntByRef(&x);
 	printf("after addToIntByRef, x = %d\n", x);
 }
@@ -194,7 +194,7 @@ Any other call that goes like `int i;` or `char str[100];` is placing that in st
 - However, because the developer takes on the responsibility of any memory allocated on the heap, they **must manually free it** once it is done being used, otherwise **memory leaks** will occur.
 
 
-> 📘 **Source & Further Reading:** [https://www.freecodecamp.org/news/understand-your-programs-memory-92431fa8c6b/](https://www.freecodecamp.org/news/understand-your-programs-memory-92431fa8c6b/)
+> 📘 [**Source & Further Reading**](https://www.freecodecamp.org/news/understand-your-programs-memory-92431fa8c6b/)
 
 
 ## When should memory be dynamically allocated?
@@ -265,7 +265,7 @@ nums[3] = 5;
 printf("%d\n", nums[3]); // prints 5
 ```
 
-Each call to `malloc()` is considered to be $O(1)$ time complexity.
+Each call to `malloc()` is considered to be ***O(1)*** time complexity.
 
 
 > 📘 [**Tutorialspoint Page**](https://www.tutorialspoint.com/c_standard_library/c_function_malloc.htm)
@@ -360,7 +360,7 @@ However, the bytes adjacent to the current memory may already be allocated by so
 
 ![realloc](diagrams/realloc.svg)
 
-**Therefore, `realloc()` has a worst case time complexity of $O(N)$.** 
+**Therefore, `realloc()` has a worst case time complexity of ***O(N)***. 
 
 
 > 📘 [**Tutorialspoint Page**](https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm)
