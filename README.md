@@ -58,7 +58,7 @@ int main()
   printf("b: %d\n", b);
   printf("address of b: %p\n", &b);
 	
-	int *a = &b;
+int *a = &b;
 	printf("address stored in a: %p\n", a);
 	printf("value retrieved after dereferencing a: %d\n", *a);
 
@@ -104,11 +104,11 @@ Instead, to be able to modify the value stored in the original variable, the fun
 
 ```c
 void addToInt(int x) {
-    x += 1;
+  x += 1;
 }
 
 void addToIntByRef(int *x) {
-    *x += 1;
+  *x += 1;
 }
 
 int main() {
