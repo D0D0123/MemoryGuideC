@@ -536,7 +536,7 @@ free(s1);
 
 ## Mallocing a 2D Array
 
-A 2D array can be treated as an array of arrays - that is, it is an array where each element contains a pointer to another array. Therefore, allocating memory for a 2D array involves **a single allocation of memory** for the array ****that will hold the other arrays, **then a for loop** to individually allocate multiple arrays.
+A 2D array can be treated as an array of arrays - that is, it is an array where each element contains a pointer to another array. Therefore, allocating memory for a 2D array involves **a single allocation of memory** for the array that will hold the other arrays, **then a for loop** to individually allocate multiple arrays.
 
 For example, to allocate memory for a 4 rows x 6 columns array:
 
