@@ -6,29 +6,29 @@
 # Contents
 
 - [Introduction](#introduction)
-	- [Pointers](#pointers)
-	- [Arrays](#arrays)
-	- [Variable Scope and Passing by Reference](#variable-scope-and-passing-by-reference)
-	- [Some Context: Stack vs Heap Memory](#some-context-stack-vs-heap-memory)
-	- [When should memory be dynamically allocated?](#when-should-memory-be-dynamically-allocated)
+  - [Pointers](#pointers)
+  - [Arrays](#arrays)
+  - [Variable Scope and Passing by Reference](#variable-scope-and-passing-by-reference)
+  - [Some Context: Stack vs Heap Memory](#some-context-stack-vs-heap-memory)
+  - [When should memory be dynamically allocated?](#when-should-memory-be-dynamically-allocated)
 
 - [Memory Allocation and Management](#memory-allocation-and-management)
-	- [Malloc](#malloc)
-	- [Free](#free)
-	- [Calloc](#calloc)
-	- [Realloc](#realloc)
-		- [How it works + Time Complexity](#how-it-works--time-complexity)
-	- [Other Functions](#other-functions)
-	- [Strings + String Literals](#strings--string-literals)
-	- [Mallocing Structs](#mallocing-structs)
-		- [Freeing a Struct](#freeing-a-struct)
-	- [Mallocing a 2D Array](#mallocing-a-2d-array)
-		- [Freeing a 2D Array](#freeing-a-2d-array)
-		- [Mallocing an Array of Strings](#mallocing-an-array-of-strings)
-	- [Complex Example - Creating a Student Housing Database in C](#complex-example---creating-a-student-housing-database-in-c)
+  - [Malloc](#malloc)
+  - [Free](#free)
+  - [Calloc](#calloc)
+  - [Realloc](#realloc)
+    - [How it works + Time Complexity](#how-it-works--time-complexity)
+  - [Other Functions](#other-functions)
+  - [Strings + String Literals](#strings--string-literals)
+  - [Mallocing Structs](#mallocing-structs)
+    - [Freeing a Struct](#freeing-a-struct)
+  - [Mallocing a 2D Array](#mallocing-a-2d-array)
+    - [Freeing a 2D Array](#freeing-a-2d-array)
+    - [Mallocing an Array of Strings](#mallocing-an-array-of-strings)
+  - [Complex Example - Creating a Student Housing Database in C](#complex-example---creating-a-student-housing-database-in-c)
 
 - [Debugging Memory Errors](#debugging-memory-errors)
-	- [Common Memory Errors](#common-memory-errors)
+  - [Common Memory Errors](#common-memory-errors)
 
 
 # Introduction
@@ -57,12 +57,12 @@ int main()
   int b = 5;
   printf("b: %d\n", b);
   printf("address of b: %p\n", &b);
-	
+  
 int *a = &b;
-	printf("address stored in a: %p\n", a);
-	printf("value retrieved after dereferencing a: %d\n", *a);
+  printf("address stored in a: %p\n", a);
+  printf("value retrieved after dereferencing a: %d\n", *a);
 
-	printf("address of a: %p\n", &a);
+  printf("address of a: %p\n", &a);
   
   return 0;
 }
@@ -112,12 +112,12 @@ void addToIntByRef(int *x) {
 }
 
 int main() {
-	int x = 5;
-	addToInt(x);
-	printf("after addToInt, x = %d\n", x);
+  int x = 5;
+  addToInt(x);
+  printf("after addToInt, x = %d\n", x);
 
-	addToIntByRef(&x);
-	printf("after addToIntByRef, x = %d\n", x);
+  addToIntByRef(&x);
+  printf("after addToIntByRef, x = %d\n", x);
 }
 
 Output:
@@ -149,15 +149,15 @@ Both of the following functions (which aim to set every element in an integer ar
 
 ```c
 void makeAllThrees(int arr[], int length) {
-	for (int i = 0; i < length; i++) {
-		arr[i] = 3;
-	}
+  for (int i = 0; i < length; i++) {
+    arr[i] = 3;
+  }
 }
 
 void makeAllThrees(int* arr, int length) {
-	for (int i = 0; i < length; i++) {
-		arr[i] = 3;
-	}
+  for (int i = 0; i < length; i++) {
+    arr[i] = 3;
+  }
 }
 ```
 
@@ -258,7 +258,7 @@ The main differences being that:
 ```c
 // initialising all values to 0
 for (int i = 0; i < 5; i++) {
-	nums[i] = 0;
+  nums[i] = 0;
 }
 // accessing and modifying
 nums[3] = 5;
@@ -285,9 +285,9 @@ Usage:
 
 ```c
 int main() {
-	int *nums = malloc(5 * sizeof(int));
-	// doing something with the array, etc
-	free(nums); // one malloc call, so one free call
+  int *nums = malloc(5 * sizeof(int));
+  // doing something with the array, etc
+  free(nums); // one malloc call, so one free call
 }
 ```
 
@@ -306,17 +306,17 @@ Usage:
 ```c
 /*
 In void *calloc(size_t nitems, size_t size):
-	nitems − This is the number of elements to be allocated.
-	size − This is the size of each element.
+  nitems − This is the number of elements to be allocated.
+  size − This is the size of each element.
 */
 int main() {
-	int *nums = calloc(5, sizeof(int));
+  int *nums = calloc(5, sizeof(int));
 
-	// Which produces the same result as doing:
-	int *nums = malloc(5 * sizeof(int));
-	for (int i = 0; i < 5; i++) {
-		nums[i] = 0;
-	}
+  // Which produces the same result as doing:
+  int *nums = malloc(5 * sizeof(int));
+  for (int i = 0; i < 5; i++) {
+    nums[i] = 0;
+  }
 }
 ```
 
@@ -336,14 +336,14 @@ Usage:
 ```c
 /*
 In void *realloc(void *ptr, size_t size):
-	ptr − This is the pointer to a memory block previously allocated with malloc, calloc or realloc to be reallocated.
-	size − This is the new size for the memory block, in bytes.
+  ptr − This is the pointer to a memory block previously allocated with malloc, calloc or realloc to be reallocated.
+  size − This is the new size for the memory block, in bytes.
 */
 int main() {
-	// the array currently has a length of 5
-	int *nums = malloc(5 * sizeof(int));
-	// after reallocing, it has a length of 10
-	nums = realloc(nums, 10 * sizeof(int));
+  // the array currently has a length of 5
+  int *nums = malloc(5 * sizeof(int));
+  // after reallocing, it has a length of 10
+  nums = realloc(nums, 10 * sizeof(int));
 }
 
 // NOTE: realloc() returns a pointer to the new memory,
@@ -383,19 +383,19 @@ In C, a string is just an array of characters, terminated by a null character (`
 
 ```c
 int main() {
-	// stack allocation of a string (character array) that can hold 3 letters (one extra for the null character at the end)
-	int n = 3;
-	char word[n + 1];
-	// storing the string "abc" as ['a', 'b', 'c', '\0']
-	word[0] = 'a';
-	word[1] = 'b';
-	word[2] = 'c';
-	word[3] = '\0';
+  // stack allocation of a string (character array) that can hold 3 letters (one extra for the null character at the end)
+  int n = 3;
+  char word[n + 1];
+  // storing the string "abc" as ['a', 'b', 'c', '\0']
+  word[0] = 'a';
+  word[1] = 'b';
+  word[2] = 'c';
+  word[3] = '\0';
 
-	// some convenient ways to do the same thing as above are:
-	char word[4] = "abc";
-	// OR
-	char word[4] = {'a', 'b', 'c', '\0'};
+  // some convenient ways to do the same thing as above are:
+  char word[4] = "abc";
+  // OR
+  char word[4] = {'a', 'b', 'c', '\0'};
 }
 ```
 
@@ -407,14 +407,14 @@ A string literal is a constant **read-only** string, whose letters cannot be mod
 
 ```c
 int main() {
-	char *word = "Hello World";
-	
-	// the following will work
-	printf("%s\n", word);
-	printf("%c\n", word[1]);
-	
-	// this won't work (will likely segfault)
-	word[1] = 'b';
+  char *word = "Hello World";
+  
+  // the following will work
+  printf("%s\n", word);
+  printf("%c\n", word[1]);
+  
+  // this won't work (will likely segfault)
+  word[1] = 'b';
 }
 ```
 
@@ -422,24 +422,24 @@ int main() {
 
 ```c
 int main() {
-	int n = 3;
-	// allocating memory for a string that can hold 3 letters (one extra for the null character at the end)
-	char *word = malloc((n + 1) * sizeof(char));
-	
-	// unlike stack allocation, only the following will work here to store "abc"
-	word[0] = 'a';
-	word[1] = 'b';
-	word[2] = 'c';
-	word[3] = '\0';
-	// OR
-	strcpy(word, "abc");
-	
-	// this **is not correct,** it'll just make the pointer *word* point to a string literal 
-	// and lose the reference to the malloced memory
-	word = "abc";
+  int n = 3;
+  // allocating memory for a string that can hold 3 letters (one extra for the null character at the end)
+  char *word = malloc((n + 1) * sizeof(char));
+  
+  // unlike stack allocation, only the following will work here to store "abc"
+  word[0] = 'a';
+  word[1] = 'b';
+  word[2] = 'c';
+  word[3] = '\0';
+  // OR
+  strcpy(word, "abc");
+  
+  // this **is not correct,** it'll just make the pointer *word* point to a string literal 
+  // and lose the reference to the malloced memory
+  word = "abc";
 
-	// remember to free the memory once it has been used
-	free(word);
+  // remember to free the memory once it has been used
+  free(word);
 }
 ```
 
@@ -453,38 +453,38 @@ Allocating memory for a struct in C is often used for data structure nodes such 
 #define MAX_NAME 20
 
 int main() {
-	// declaring the struct type 'student', whose name is max 20 letters in length, has an age and id
-	struct student {
-		char name[MAX_NAME];
-		int age;
-		int id;
-	}
+  // declaring the struct type 'student', whose name is max 20 letters in length, has an age and id
+  struct student {
+    char name[MAX_NAME];
+    int age;
+    int id;
+  }
 
-	typedef struct student *Student; // writing *Student* is the same as writing *struct student *
-	
-	//stack allocated struct
-	struct student s1 = {
-		.name = "John",
-		.age = 20,
-		.id = 1
-	};
+  typedef struct student *Student; // writing *Student* is the same as writing *struct student *
+  
+  //stack allocated struct
+  struct student s1 = {
+    .name = "John",
+    .age = 20,
+    .id = 1
+  };
 
-	// heap allocated struct
-	// s2 is a pointer to a student struct
-	Student s2 = malloc(sizeof(struct student));
-	s2->name = "John"; // s2->name is equivalent to doing (*s2).name
-	s2->age = 20;
-	s2->id = 1;
+  // heap allocated struct
+  // s2 is a pointer to a student struct
+  Student s2 = malloc(sizeof(struct student));
+  s2->name = "John"; // s2->name is equivalent to doing (*s2).name
+  s2->age = 20;
+  s2->id = 1;
 
-	// the following two are INCORRECT, because they are only initialising 
-	// enough memory for POINTERS, not enough for the struct itself
-	Student s3 = malloc(sizeof(Student));               // sizeof(pointer to the struct)
-	Student s4 = malloc(sizeof(Student *));             // sizeof(pointer to the pointer to the struct)
+  // the following two are INCORRECT, because they are only initialising 
+  // enough memory for POINTERS, not enough for the struct itself
+  Student s3 = malloc(sizeof(Student));               // sizeof(pointer to the struct)
+  Student s4 = malloc(sizeof(Student *));             // sizeof(pointer to the pointer to the struct)
 
-	// the following is CORRECT, because s5 is a pointer to the student,
-	// but the asterisk in front of it in 'sizeof(*s5)' dereferences the pointer
-	// type to obtain the 'struct Student' type
-	Student s5 = malloc(sizeof(*s5));
+  // the following is CORRECT, because s5 is a pointer to the student,
+  // but the asterisk in front of it in 'sizeof(*s5)' dereferences the pointer
+  // type to obtain the 'struct Student' type
+  Student s5 = malloc(sizeof(*s5));
 }
 ```
 
@@ -495,32 +495,32 @@ However, **when a struct has fields inside which need to be heap allocated, the 
 ```c
 int main() {
 
-	struct student {
-		char *name;
-		int age;
-		int id;
-		double *course_marks; // an array of marks for each course the student has done
-	}
+  struct student {
+    char *name;
+    int age;
+    int id;
+    double *course_marks; // an array of marks for each course the student has done
+  }
 
-	typedef struct student *Student;
+  typedef struct student *Student;
 
-	// first, allocating memory for the struct itself - this does not allocate memory for the *name* and *course_marks* fields
-	Student s1 = malloc(sizeof(struct Student));
-	
-	s1->age = 20;
-	s1->id = 1;
-	
-	// allocating memory for the *name* string before assigning a value to it
-	int name_len = 4; 
-	s1->name = malloc((name_len + 1) * sizeof(char));
-	strcpy(s1->name, "John");
+  // first, allocating memory for the struct itself - this does not allocate memory for the *name* and *course_marks* fields
+  Student s1 = malloc(sizeof(struct Student));
+  
+  s1->age = 20;
+  s1->id = 1;
+  
+  // allocating memory for the *name* string before assigning a value to it
+  int name_len = 4; 
+  s1->name = malloc((name_len + 1) * sizeof(char));
+  strcpy(s1->name, "John");
 
-	// allocating memory for the *course_marks* array before assigning a value to it
-	int num_courses = 7; 
-	s1->course_marks = malloc(num_courses * sizeof(int));
-	s1->course_marks[0] = 96;
-	s1->course_marks[1] = 87;
-	...
+  // allocating memory for the *course_marks* array before assigning a value to it
+  int num_courses = 7; 
+  s1->course_marks = malloc(num_courses * sizeof(int));
+  s1->course_marks[0] = 96;
+  s1->course_marks[1] = 87;
+  ...
 }
 ```
 
@@ -543,23 +543,23 @@ For example, to allocate memory for a 4 rows x 6 columns array:
 ```c
 // stack allocation
 int main() {
-	int arr2d[4][6];
+  int arr2d[4][6];
 }
 
 // heap allocation
 int main() {
-	int nrows = 4;
-	int ncols = 6;
+  int nrows = 4;
+  int ncols = 6;
 
-	int **arr2d = malloc(nrows * sizeof(int *));
-	for (int i = 0; i < nrows; i++) {
-		arr2d[i] = malloc(ncols * sizeof(int));
-	}
+  int **arr2d = malloc(nrows * sizeof(int *));
+  for (int i = 0; i < nrows; i++) {
+    arr2d[i] = malloc(ncols * sizeof(int));
+  }
 
-	// access 2D array elements using arr2d[row][col]
-	arr2d[2][3] = 7;
-	arr2d[0][4] = 42;
-	arr2d[3][5] = 13;
+  // access 2D array elements using arr2d[row][col]
+  arr2d[2][3] = 7;
+  arr2d[0][4] = 42;
+  arr2d[3][5] = 13;
 }
 ```
 
@@ -575,7 +575,7 @@ Again, every `malloc/calloc` call must have a corresponding `free` call. In this
 
 ```c
 for (int i = 0; i < nrows; i++) {
-	free(arr2d[i]);
+  free(arr2d[i]);
 }
 free(arr2d);
 ```
@@ -588,18 +588,18 @@ For example, mallocing an array of strings that can hold 4 words, each with a ma
 
 ```c
 int main() {
-	int nwords = 4;
-	int max_letters = 5;
+  int nwords = 4;
+  int max_letters = 5;
 
-	int **words = malloc(nwords * sizeof(char *));
-	for (int i = 0; i < nwords; i++) {
-		words[i] = malloc((max_letters + 1) * sizeof(char));
-	}
+  int **words = malloc(nwords * sizeof(char *));
+  for (int i = 0; i < nwords; i++) {
+    words[i] = malloc((max_letters + 1) * sizeof(char));
+  }
 
-	
-	strcpy(words[0], "earth");
-	strcpy(words[1], "air");
-	strcpy(words[2], "fire");
+  
+  strcpy(words[0], "earth");
+  strcpy(words[1], "air");
+  strcpy(words[2], "fire");
 }
 ```
 
@@ -617,10 +617,10 @@ Consider the student struct being defined as:
 
 ```c
 struct student {
-		char *name;
-		int age;
-		double *course_marks;
-		struct student *next;
+    char *name;
+    int age;
+    double *course_marks;
+    struct student *next;
 }
 
 typedef struct student *Student; // writing *Student* is the same as writing *struct student **
@@ -641,46 +641,46 @@ void ListAppend(Student list, Student new);
 void FreeAllData(Student **units);
 
 int main() {
-	int num_floors = 3;
-	int num_units = 4;
-	
-	// an array of arrays of pointers to student structs --> hence, Student ** (remember that 'Student' 
-	// is the same as 'struct student *') 
-	
-	Student **units = Create2DArray(num_floors, num_units);
-	
-	ListAppend(units[0][1], NewStudent("John", 23, 3));
-	ListAppend(units[0][1], NewStudent("Sarah", 21, 2));
-	ListAppend(units[0][1], NewStudent("Bob", 18, 2));
-	// ...
-	ListAppend(units[2][3], NewStudent("Bart", 25, 2));
-	// ... etc
+  int num_floors = 3;
+  int num_units = 4;
+  
+  // an array of arrays of pointers to student structs --> hence, Student ** (remember that 'Student' 
+  // is the same as 'struct student *') 
+  
+  Student **units = Create2DArray(num_floors, num_units);
+  
+  ListAppend(units[0][1], NewStudent("John", 23, 3));
+  ListAppend(units[0][1], NewStudent("Sarah", 21, 2));
+  ListAppend(units[0][1], NewStudent("Bob", 18, 2));
+  // ...
+  ListAppend(units[2][3], NewStudent("Bart", 25, 2));
+  // ... etc
 }
 
 Student **Create2DArray(int nrows, int ncols) {
-	Student **arr2D = malloc(nrows * sizeof(Student *));
-	for (int i = 0; i < nrows; i++) {
-		arr2D[i] = malloc(ncols * sizeof(Student));
-	}
-	
-	return arr2D;
+  Student **arr2D = malloc(nrows * sizeof(Student *));
+  for (int i = 0; i < nrows; i++) {
+    arr2D[i] = malloc(ncols * sizeof(Student));
+  }
+  
+  return arr2D;
 }
 
 // As mentioned in the *Mallocing Structs* section above: for each struct, 
 // memory must be allocated for the struct itself, and then any dynamic fields within the struct.
 
 Student NewStudent(char *name, int age, int num_courses) {
-	Student stu = malloc(sizeof(struct student));
+  Student stu = malloc(sizeof(struct student));
 
-	int name_len = strlen(name);
-	stu->name = malloc((name_len + 1) * sizeof(char));
-	strcpy(stu->name, name);
+  int name_len = strlen(name);
+  stu->name = malloc((name_len + 1) * sizeof(char));
+  strcpy(stu->name, name);
 
-	stu->age = age;
-	stu->course_marks = malloc(num_courses * sizeof(double));
-	stu->next = NULL;
-	
-	return stu;		
+  stu->age = age;
+  stu->course_marks = malloc(num_courses * sizeof(double));
+  stu->next = NULL;
+  
+  return stu;		
 }
 ```
 
@@ -727,7 +727,7 @@ strcpy(str, "Hello World");
 $ ./valgrind --leak-check=full ./<program>
 
 Invalid write of size 4
-	at 0x10917E ...
+  at 0x10917E ...
 ```
 
 </details>
@@ -751,13 +751,13 @@ $ ./valgrind --leak-check=full ./<program>
 
 HEAP SUMMARY:
      in use at exit: 512 bytes in 1 blocks
-	   total heap usage: 1 allocs, 0 frees, 512 bytes allocated
+     total heap usage: 1 allocs, 0 frees, 512 bytes allocated
  512 bytes in 1 blocks are definitely lost in loss record 1 of 1
     at 0x4843839: malloc (in /usr/libexec/valgrind/vgpreload_mem...)
     by 0x10915E: main (in /home/program)
 ...
 LEAK SUMMARY:
-	definitely lost: 512 bytes in 1 blocks
+  definitely lost: 512 bytes in 1 blocks
 ...
 ```
 
@@ -786,7 +786,7 @@ free(): double free detected in tcache 2
 $ ./valgrind --leak-check=full ./<program>
 
 Invalid free() / delete / delete[] / realloc()
-	at 0x484621F: ...
+  at 0x484621F: ...
 ```
 
 </details>
