@@ -2,6 +2,35 @@
 
 *DISCLAIMER: This guide is intended to provide a summary of some key concepts surrounding memory management in C, to help you gain some background and context, and help you debug memory errors in your program. This guide does not go into significant depth and simplifies some concepts for the sake of clarity, so links to further reading will be provided where necessary. This guide is also unofficial, and not directly affiliated with UNSW.*
 
+
+# Contents
+
+- [Introduction](#introduction)
+	- [Pointers](#pointers)
+	- [Arrays](#arrays)
+	- [Variable Scope and Passing by Reference](#variable-scope-and-passing-by-reference)
+	- [Some Context: Stack vs Heap Memory](#some-context-stack-vs-heap-memory)
+	- [When should memory be dynamically allocated?](#when-should-memory-be-dynamically-allocated)
+
+- [Memory Allocation and Management](#memory-allocation-and-management)
+	- [Malloc](#malloc)
+	- [Free](#free)
+	- [Calloc](#calloc)
+	- [Realloc](#realloc)
+		- [How it works + Time Complexity](#how-it-works--time-complexity)
+	- [Other Functions](#other-functions)
+	- [Strings + String Literals](#strings--string-literals)
+	- [Mallocing Structs](#mallocing-structs)
+		- [Freeing a Struct](#freeing-a-struct)
+	- [Mallocing a 2D Array](#mallocing-a-2d-array)
+		- [Freeing a 2D Array](#freeing-a-2d-array)
+		- [Mallocing an Array of Strings](#mallocing-an-array-of-strings)
+	- [Complex Example - Creating a Student Housing Database in C](#complex-example---creating-a-student-housing-database-in-c)
+
+- [Debugging Memory Errors](#debugging-memory-errors)
+	- [Common Memory Errors](#common-memory-errors)
+
+
 # Introduction
 
 A good way to visualise memory is as a [contiguous](https://www.merriam-webster.com/dictionary/contiguous) sequence of bytes, each with their own memory address:
@@ -38,8 +67,8 @@ int main()
   return 0;
 }
 
-**output:**
-*$ b: 5
+output:
+$ b: 5
 $ address of b: 1008
 $ address stored in a: 1008
 $ value retrieved after dereferencing a: 5
@@ -100,7 +129,7 @@ So we can dereference a pointer within a function and change the value at that a
 
 **What about changing what a pointer itself points to?** 
 
-** Although this section is functionally correct it was a bit confusing at first, I’ll try think of a more intuitive way to explain **
+***Although this section is functionally correct it was a bit confusing at first, I’ll try think of a more intuitive way to explain***
 
 To do this, *a pointer to that pointer* must be passed as an argument to the function. Otherwise, the local copy of the pointer will be pointing to something different, but the original pointer will stay the same.
 
@@ -135,8 +164,6 @@ void makeAllThrees(int* arr, int length) {
  
 
 ## Some Context: Stack vs Heap Memory
-
-** I’ve added some stuff here **
 
 Your program’s memory is divided up into a number of different sections, usually arranged like so:
 
@@ -175,7 +202,7 @@ Any other call that goes like `int i;` or `char str[100];` is placing that in st
 After memory is allocated for something in the stack, that memory cannot be resized. Hence, the size that is specified at compile time will be the maximum size of the memory for the duration of the program.
 
 - For singular numerical variables (`int`*,* `char`, `double`*, etc*) stack memory is fine to use - there shouldn't be a need to change the type or size of a variable like this.
-- Similarly, if the maximum size of an array is known, and you are certain that the array will not have to change size, declaring this using stack memory is fine as well:
+- Similarly, if the maximum size of an array is known, and you are certain that the array won't have to change size, declaring this using stack memory is fine as well:
 
 ```c
 int i = 0;
@@ -200,9 +227,11 @@ For example, consider a program that reads words in from a text file and convert
 This is a situation where dynamic memory allocation is necessary - to allocate a new list node for each word read in, and to allocate a character array to store each word.
 
 
-> 📘 **Source and Further Reading:** [https://stackoverflow.com/questions/18217525/why-or-when-do-you-need-to-dynamically-allocate-memory-in-c](https://stackoverflow.com/questions/18217525/why-or-when-do-you-need-to-dynamically-allocate-memory-in-c)
+> 📘 [**Source and Further Reading**](https://stackoverflow.com/questions/18217525/why-or-when-do-you-need-to-dynamically-allocate-memory-in-c)
 
-# Malloc
+# Memory Allocation and Management
+
+## Malloc
 
 **The C library function `void *malloc(size_t size)` allocates a requested amount of memory in the heap, and returns a pointer to the start of that memory (or NULL if the memory cannot be allocated).** 
 
@@ -239,7 +268,7 @@ printf("%d\n", nums[3]); // prints 5
 Each call to `malloc()` is considered to be $O(1)$ time complexity.
 
 
-> 📘 **Tutorialspoint Page:** [https://www.tutorialspoint.com/c_standard_library/c_function_malloc.htm](https://www.tutorialspoint.com/c_standard_library/c_function_malloc.htm)
+> 📘 [**Tutorialspoint Page**](https://www.tutorialspoint.com/c_standard_library/c_function_malloc.htm)
 
 
 ## Free
@@ -262,7 +291,7 @@ int main() {
 }
 ```
 
-> 📘 **Tutorialspoint Page:** [https://www.tutorialspoint.com/c_standard_library/c_function_free.htm](https://www.tutorialspoint.com/c_standard_library/c_function_free.htm)
+> 📘 [**Tutorialspoint Page**](https://www.tutorialspoint.com/c_standard_library/c_function_free.htm)
 
 
 
@@ -294,7 +323,7 @@ int main() {
 Using calloc to allocate memory for a struct containing primitive numeric types and pointers will ensure that all the numeric fields are set to 0 and all pointers are set to NULL.
 
 
-> 📘 **Tutorialspoint Page:** [https://www.tutorialspoint.com/c_standard_library/c_function_calloc.htm](https://www.tutorialspoint.com/c_standard_library/c_function_calloc.htm)
+> 📘 [**Tutorialspoint Page**](https://www.tutorialspoint.com/c_standard_library/c_function_calloc.htm)
 
 ## Realloc
 
@@ -334,9 +363,9 @@ However, the bytes adjacent to the current memory may already be allocated by so
 **Therefore, `realloc()` has a worst case time complexity of $O(N)$.** 
 
 
-> 📘 **Tutorialspoint Page:** [https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm](https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm)
+> 📘 [**Tutorialspoint Page**](https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm)
 
-> **Source for O(N) Behaviour:** [https://en.cppreference.com/w/c/memory/realloc](https://en.cppreference.com/w/c/memory/realloc)
+> [**Source for O(N) Behaviour**](https://en.cppreference.com/w/c/memory/realloc)
 
 ## Other Functions
 
@@ -414,7 +443,7 @@ int main() {
 }
 ```
 
-> 📘 **Further Reading:** [https://www.codingame.com/playgrounds/14213/how-to-play-with-strings-in-c/what-is-a-string-in-c](https://www.codingame.com/playgrounds/14213/how-to-play-with-strings-in-c/what-is-a-string-in-c)
+> 📘[**Further Reading**](https://www.codingame.com/playgrounds/14213/how-to-play-with-strings-in-c/what-is-a-string-in-c)
 
 ## Mallocing Structs
 
@@ -616,7 +645,9 @@ int main() {
 	int num_units = 4;
 	
 	// an array of arrays of pointers to student structs --> hence, Student ** (remember that 'Student' 
-	// is the same as 'struct student *') Student **units = Create2DArray(num_floors, num_units);
+	// is the same as 'struct student *') 
+	
+	Student **units = Create2DArray(num_floors, num_units);
 	
 	ListAppend(units[0][1], NewStudent("John", 23, 3));
 	ListAppend(units[0][1], NewStudent("Sarah", 21, 2));
@@ -681,6 +712,10 @@ It is also highly recommended that you check out all the [official UNSW CSE debu
 
 This error occurs when a read or write instruction references unallocated or deallocated memory (i.e. you try to access or modify something that has already been freed)
 
+<details open>
+<summary>Example</summary>
+<br>
+
 ```c
 char *str = malloc(25 * sizeof(char)); 
 free(str);
@@ -695,9 +730,16 @@ Invalid write of size 4
 	at 0x10917E ...
 ```
 
+</details>
+<br>
+
 **Memory leaks**
 
 Memory leaks occur when memory is allocated but not released.  Enough leaks will eventually cause the application to run out of memory resulting in a premature termination.
+
+<details open>
+<summary>Example</summary>
+<br>
 
 ```c
 char *str = malloc(512 * sizeof(char));
@@ -713,15 +755,22 @@ HEAP SUMMARY:
  512 bytes in 1 blocks are definitely lost in loss record 1 of 1
     at 0x4843839: malloc (in /usr/libexec/valgrind/vgpreload_mem...)
     by 0x10915E: main (in /home/program)
-**...**
+...
 LEAK SUMMARY:
 	definitely lost: 512 bytes in 1 blocks
 ...
 ```
 
+</details>
+<br>
+
 **Missing Allocation/Double Free**
 
 Occurs when freeing memory which has already been freed.
+
+<details open>
+<summary>Example</summary>
+<br>
 
 ```c
 char* str = malloc(20 * sizeof(char)); 
@@ -740,7 +789,13 @@ Invalid free() / delete / delete[] / realloc()
 	at 0x484621F: ...
 ```
 
+</details>
+<br>
+
+**Other Common Memory Errors**
+
 - trying to modify read-only memory (e.g. string literals)
+- attempting to access a field of a null pointer (e.g. curr->next when curr is NULL)
 - neglecting to pass by reference
 - mallocing only enough space for a pointer to a string/struct instead of the string/struct itself
 - trying to write past the bounds of an array
