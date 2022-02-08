@@ -360,7 +360,7 @@ However, the bytes adjacent to the current memory may already be allocated by so
 
 ![realloc](diagrams/realloc.svg)
 
-**Therefore, `realloc()` has a worst case time complexity of ***O(N)***. 
+**Therefore, `realloc()` has a worst case time complexity of ***O(N)*****. 
 
 
 > 📘 [**Tutorialspoint Page**](https://www.tutorialspoint.com/c_standard_library/c_function_realloc.htm)
@@ -460,7 +460,7 @@ int main() {
     int id;
   }
 
-  typedef struct student *Student; // writing *Student* is the same as writing *struct student *
+  typedef struct student *Student; // writing 'Student' is the same as writing 'struct student *'
   
   //stack allocated struct
   struct student s1 = {
@@ -504,18 +504,18 @@ int main() {
 
   typedef struct student *Student;
 
-  // first, allocating memory for the struct itself - this does not allocate memory for the *name* and *course_marks* fields
+  // first, allocating memory for the struct itself - this does not allocate memory for the 'name' and 'course_marks' fields
   Student s1 = malloc(sizeof(struct Student));
   
   s1->age = 20;
   s1->id = 1;
   
-  // allocating memory for the *name* string before assigning a value to it
+  // allocating memory for the 'name' string before assigning a value to it
   int name_len = 4; 
   s1->name = malloc((name_len + 1) * sizeof(char));
   strcpy(s1->name, "John");
 
-  // allocating memory for the *course_marks* array before assigning a value to it
+  // allocating memory for the 'course_marks' array before assigning a value to it
   int num_courses = 7; 
   s1->course_marks = malloc(num_courses * sizeof(int));
   s1->course_marks[0] = 96;
