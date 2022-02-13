@@ -1,5 +1,7 @@
 # Guide to Memory Management and Debugging in C
 
+By Soura Mandal and Jonah Meggs
+
 *DISCLAIMER: This guide is intended to provide a summary of some key concepts surrounding memory management in C, to help you gain some background and context, and help you debug memory errors in your program. This guide does not go into significant depth and simplifies some concepts for the sake of clarity, so links to further reading will be provided where necessary. This guide is also unofficial, and not directly affiliated with UNSW.*
 
 
@@ -297,7 +299,7 @@ int main() {
 
 ## Calloc
 
-**The C library function `void *calloc(size_t nitems, size_t size)` function allocates a requested amount of memory in the heap, and returns a pointer to the start of that memory (or NULL if the memory cannot be allocated). It then initialises/sets all of the allocated memory to zero.**
+**The C library function `void *calloc(size_t nitems, size_t size)` allocates a requested amount of memory in the heap, and returns a pointer to the start of that memory (or NULL if the memory cannot be allocated). It then initialises/sets all of the allocated memory to zero.**
 
 This produces the same result as mallocing an array, and then iterating over it and setting every element to 0.
 
