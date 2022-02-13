@@ -483,7 +483,7 @@ int main() {
 
   // the following is CORRECT, because s5 is a pointer to the student,
   // but the asterisk in front of it in 'sizeof(*s5)' dereferences the pointer
-  // type to obtain the 'struct Student' type
+  // type to obtain the 'struct student' type
   Student s5 = malloc(sizeof(*s5));
 }
 ```
