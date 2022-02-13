@@ -129,9 +129,7 @@ $ after addToIntByRef, x = 6
 
 So we can dereference a pointer within a function and change the value at that address. 
 
-**What about changing what a pointer itself points to?** 
-
-***Although this section is functionally correct it was a bit confusing at first, I’ll try think of a more intuitive way to explain***
+**What about changing what a pointer itself points to?**
 
 To do this, *a pointer to that pointer* must be passed as an argument to the function. Otherwise, the local copy of the pointer will be pointing to something different, but the original pointer will stay the same.
 
