@@ -105,17 +105,17 @@ When a variable is passed as an argument into a function, the function receives 
 Instead, to be able to modify the value stored in the original variable, the function must receive a pointer to the variable - this is called **passing by reference**. This works because now the function has the address of the original variable - remember that a pointer is just a memory address.
 
 ```c
-void addToInt(int x) {
-  x += 1;
+void addToInt(int num) {
+  num += 1;
 }
 
-void addToIntByRef(int *x) {
-  *x += 1;
+void addToIntByRef(int *num) {
+  *num += 1;
 }
 
 int main() {
   int x = 5;
-  addToInt(x);
+  addToInt(x); // only the VALUE stored inside x is passed into the function
   printf("after addToInt, x = %d\n", x);
 
   addToIntByRef(&x);
