@@ -60,7 +60,7 @@ int main()
   printf("b: %d\n", b);
   printf("address of b: %p\n", &b);
   
-int *a = &b;
+  int *a = &b;
   printf("address stored in a: %p\n", a);
   printf("value retrieved after dereferencing a: %d\n", *a);
 
