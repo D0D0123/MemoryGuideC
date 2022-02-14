@@ -458,21 +458,21 @@ int main() {
     char name[MAX_NAME];
     int age;
     int id;
-  }
+  };
 
-  typedef struct student *Student; // writing 'Student' is the same as writing 'struct student *'
+  typedef struct student *Student; // defines that writing 'Student' is the same as writing 'struct student *'
   
   //stack allocated struct
   struct student s1 = {
-    .name = "John",
     .age = 20,
     .id = 1
   };
+  strcpy(s1.name, "John");
 
   // heap allocated struct
   // s2 is a pointer to a student struct
   Student s2 = malloc(sizeof(struct student));
-  s2->name = "John"; // s2->name is equivalent to doing (*s2).name
+  strcpy(s2->name, "Bob");  // s2->name is equivalent to doing (*s2).name
   s2->age = 20;
   s2->id = 1;
 
@@ -500,7 +500,7 @@ int main() {
     int age;
     int id;
     double *course_marks; // an array of marks for each course the student has done
-  }
+  };
 
   typedef struct student *Student;
 
