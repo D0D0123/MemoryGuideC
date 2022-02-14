@@ -505,7 +505,7 @@ int main() {
   typedef struct student *Student;
 
   // first, allocating memory for the struct itself - this does not allocate memory for the 'name' and 'course_marks' fields
-  Student s1 = malloc(sizeof(struct Student));
+  Student s1 = malloc(sizeof(struct student));
   
   s1->age = 20;
   s1->id = 1;
