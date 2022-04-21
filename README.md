@@ -684,6 +684,47 @@ Student NewStudent(char *name, int age, int num_courses) {
 }
 ```
 
+### What about returning an array from a function?
+
+Only heap-allocated arrays (i.e. malloced arrays) can be validly returned from a function. Stack allocated arrays (i.e. using square-bracket notation) within a function are local to the function's scope, and will not be able to be used after returning.
+
+```c
+// invalid return 
+int *return_stack_array() {
+  int arr[10];
+  for (int i = 0; i < 10; i++) {
+    arr[i] = i;
+  }
+  return arr;
+}
+
+// valid return
+int *return_heap_array() {
+  int *arr = malloc(10 * sizeof(int));
+  for (int i = 0; i < 10; i++) {
+    arr[i] = i;
+  }
+  return arr;
+}
+
+int main() {
+  int* arr_p;
+
+  // undefined behaviour
+  arr_p = return_stack_array();
+  printf("%d\n", arr_p[9]);
+
+  // correct
+  arr_p = return_heap_array();
+  printf("%d\n", arr_p[9]);
+  free(arr_p);
+
+  return 0;
+}
+```
+> 📘[**Further Reading**](https://stackoverflow.com/questions/68522620/returning-an-array-from-function-in-c) 
+
+
 # Debugging Memory Errors
 
 The primary tool used to debug memory errors is 'valgrind', a a programming tool for memory debugging, memory leak detection, and profiling.
