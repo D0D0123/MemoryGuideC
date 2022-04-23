@@ -251,7 +251,7 @@ In memory, this array allocation can be visualised just like it was in the 'Arra
 
 The main differences being that:
 
-- Stack allocated arrays are declared with a constant between square brackets like `int nums[5];` , while a malloced array is defined as a pointer variable `int *nums = ...` . Remember that in both cases, `nums` is a pointer to the start of the contiguous memory
+- Stack allocated arrays are declared with an integer between square brackets like `int nums[5];`, while a malloced array is defined as a pointer variable `int *nums = ...` . Remember that in both cases, `nums` is a pointer to the start of the contiguous memory
 - The stack allocated array cannot be resized during runtime, while the malloced array can be resized using `realloc()` (more on this soon)
 
 ```c
