@@ -269,7 +269,7 @@ Each call to `malloc()` is considered to be ***O(1)*** time complexity.
 
 > 📘 [**Tutorialspoint Page**](https://www.tutorialspoint.com/c_standard_library/c_function_malloc.htm)
 
-### Returning an Array from a Function - Stack vs Heap Allocated
+#### Returning an Array from a Function - Stack vs Heap Allocated
 
 Only heap-allocated arrays (i.e. malloced arrays) can be validly returned from a function. Stack allocated arrays (i.e. using square-bracket notation) within a function are local to the function's scope, and will not be able to be used after returning.
 
