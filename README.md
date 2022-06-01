@@ -661,7 +661,7 @@ struct student {
     struct student *next;
 }
 
-typedef struct student *Student; // writing *Student* is the same as writing *struct student **
+typedef struct student *Student; // writing 'Student' is the same as writing 'struct student *'
 ```
 
 After looking at the given scenario, it can be seen that we need to malloc a few things:
