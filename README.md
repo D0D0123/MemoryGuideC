@@ -659,7 +659,7 @@ struct student {
     int age;
     double *course_marks;
     struct student *next;
-}
+};
 
 typedef struct student *Student; // writing 'Student' is the same as writing 'struct student *'
 ```
