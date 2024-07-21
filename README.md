@@ -100,6 +100,8 @@ There are some things to note here:
 
 ## Variable Scope and Passing by Reference
 
+*Scope* is the area of the program where an item (be it variable, constant, function, etc.) that has an identifier name is recognized. It defines where in the program the variable can be used or referenced.
+
 When a variable is passed as an argument into a function, the function receives a *copy* of that variable that is *local to the function's scope*. This means that you can't modify the value of the original variable by directly passing it into a function. 
 
 Instead, to be able to modify the value stored in the original variable, the function must receive a pointer to the variable - this is called **passing by reference**. This works because now the function has the address of the original variable - remember that a pointer is just a memory address.
@@ -199,6 +201,7 @@ Any other call that goes like `int i;` or `char str[100];` is placing that in st
 
 ## When should memory be dynamically allocated?
 
+### Size
 After memory is allocated for something in the stack, that memory cannot be resized. Hence, the size that is specified at compile time will be the maximum size of the memory for the duration of the program.
 
 - For singular numerical variables (`int`*,* `char`, `double`*, etc*) stack memory is fine to use - there shouldn't be a need to change the type or size of a variable like this.
@@ -225,6 +228,15 @@ However, you need to use dynamic memory when:
 For example, consider a program that reads words in from a text file and converts it into a linked list of words - you don't know how many words there are, nor do you know the length of the longest word at compile time. 
 
 This is a situation where dynamic memory allocation is necessary - to allocate a new list node for each word read in, and to allocate a character array to store each word.
+
+### Lifetime
+The other major reason to use dynamic memory allocation is because you get control over the **lifetime** of the allocated memory. 
+
+If you initialise a stack-allocated variable within a function, it will be local to the function's scope, and it's memory will be automatically freed at the end of the function call. The variable will be undefined if returned from that function.
+
+If you manually allocate memory for a variable, then the contents of that memory will be usable until explicitly freed, and can be returned, referenced and modified by other parts of your code as needed.
+
+This is another reason why nodes for linked lists and other dynamic data structures are manually allocated.
 
 
 > 📘 [**Source and Further Reading**](https://stackoverflow.com/questions/18217525/why-or-when-do-you-need-to-dynamically-allocate-memory-in-c)
@@ -272,6 +284,8 @@ Each call to `malloc()` is considered to be ***O(1)*** time complexity.
 #### Returning an Array from a Function - Stack vs Heap Allocated
 
 Only heap-allocated arrays (i.e. malloced arrays) can be validly returned from a function. Stack allocated arrays (i.e. using square-bracket notation) within a function are local to the function's scope, and will not be able to be used after returning.
+
+The reason for this is described in the [lifetime](#lifetime) section above.
 
 ```c
 // invalid return 
